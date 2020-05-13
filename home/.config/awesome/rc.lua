@@ -534,63 +534,23 @@ client.connect_signal("manage", function (c)
     end
 end)
 
--- tag.connect_signal("request::screen", function(t)
---     for s in screen do
---         if s ~= t.screen and
---            s.geometry.x == t.screen.geometry.x and
---            s.geometry.y == t.screen.geometry.y and
---            s.geometry.width == t.screen.geometry.width and
---            s.geometry.height == t.screen.geometry.height then
---             local t2 = awful.tag.find_by_name(s, t.name)
---             if t2 then
---                 t:swap(t2)
---             else
---                 t.screen = s
---             end
---             return
---         end
---     end
--- end)
 
 -- on screen remove:
 -- move all clients to next screen
+-- use the same tag names
 tag.connect_signal("request::screen", function(t)
     clients = t:clients()
     for s in screen do
          if s ~= t.screen then
--- 	s:clients(clients)
  	    local new_t = awful.tag.find_by_name(s, t.name)
             for foo, c in ipairs(clients) do
---                c:move_to_screen(s)
                c:move_to_tag(new_t)
             end
             return
          end
     end
---            t.screen = s
---            t.name = t.name .. "'"
---            awful.tag.setvolatile(true, t)
---            return
---        end
---    end
 end);
 
--- -- xx
--- tag.connect_signal("request::screen", function(t)
---     clients = t:clients()
---     for s in screen do
--- --        if s ~= t.screen and clients and next(clients) then
---         if s ~= t.screen then
---             for c in clients do
--- 		c:move_to_screen()
--- 	    end
--- --            t.screen = s
--- --            t.name = t.name .. "'"
--- --            awful.tag.setvolatile(true, t)
--- --            return
---         end
---     end
--- end);
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
 client.connect_signal("request::titlebars", function(c)
