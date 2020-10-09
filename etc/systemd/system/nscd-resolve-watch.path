@@ -1,0 +1,9 @@
+[Unit]
+Description=Watchdog for /etc/resolv.conf changes
+
+[Path]
+PathChanged=/etc/resolv.conf
+
+[Install]
+WantedBy=multi-user.target
+

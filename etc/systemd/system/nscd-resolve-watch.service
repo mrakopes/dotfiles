@@ -1,0 +1,11 @@
+[Unit]
+Description=Force reload of nscd host cache after /etc/resolv.conf changes
+
+[Service]
+#Type=simple
+ExecStart=/usr/sbin/nscd -i hosts
+
+
+[Install]
+WantedBy=multi-user.target
+
