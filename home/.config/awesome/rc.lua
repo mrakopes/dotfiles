@@ -346,7 +346,13 @@ globalkeys = gears.table.join(
     awful.key({ }, "XF86MonBrightnessDown", function ()
         awful.util.spawn("xbacklight -dec 15") end),
     awful.key({ }, "XF86MonBrightnessUp", function ()
-        awful.util.spawn("xbacklight -inc 15") end)
+        awful.util.spawn("xbacklight -inc 15") end),
+
+    -- display layout
+
+    awful.key({ }, "XF86Display", function ()
+        awful.util.spawn("autorandr -c") end)
+
 )
 
 clientkeys = gears.table.join(
