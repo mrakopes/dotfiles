@@ -47,7 +47,8 @@ end
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 -- beautiful.wallpaper = awful.util.get_configuration_dir() .. "themes/default/wall.svg"
-beautiful.wallpaper = awful.util.get_configuration_dir() .. "themes/default/1056666-arch-linux-wallpaper-1920x1080-for-ios.jpg"
+-- beautiful.wallpaper = awful.util.get_configuration_dir() .. "themes/default/1056666-arch-linux-wallpaper-1920x1080-for-ios.jpg"
+beautiful.wallpaper = awful.util.get_configuration_dir() .. "themes/wallpaper/wallpaper.png"
 
 
 -- This is used later as the default terminal and editor to run.
@@ -173,7 +174,8 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    awful.tag({ "1", "2" }, s, awful.layout.layouts[3])
+    awful.tag({ "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -233,7 +235,7 @@ root.buttons(gears.table.join(
 
 -- lockscreen = function() awful.util.spawn("slock") end
 -- lockscreen = function() awful.util.spawn("xscreensaver-command -lock") end
-lockscreen = function() awful.util.spawn("i3lock -t -i /home/cigi/.screensave/image/1056666-arch-linux-wallpaper-1920x1080-for-ios.png") end
+lockscreen = function() awful.util.spawn("i3lock -t -i /home/cigi/Images/wallpaper/hello-world.png -c 000000") end
 volumectl = function() awful.util.spawn("pavucontrol-qt") end
 
 
@@ -500,7 +502,8 @@ awful.rules.rules = {
           "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
           "Wpa_gui",
           "veromix",
-          "xtightvncviewer"},
+          "xtightvncviewer",
+          "Galculator"},
 
         -- Note that the name property shown in xprop might be set slightly after creation of the client
         -- and the name shown there might not match defined rules here.

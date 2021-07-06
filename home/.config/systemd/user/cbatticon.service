@@ -1,0 +1,11 @@
+# /usr/lib/systemd/user/redshift-gtk.service
+[Unit]
+Description=cbatticon applet daeomn
+After=display-manager.service
+
+[Service]
+ExecStart=/usr/bin/cbatticon
+Restart=always
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,11 @@
+# /usr/lib/systemd/user/redshift-gtk.service
+[Unit]
+Description=NetworkManager applet daeomn
+After=display-manager.service
+
+[Service]
+ExecStart=/usr/bin/nm-applet
+Restart=always
+
+[Install]
+WantedBy=default.target

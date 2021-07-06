@@ -1,0 +1,11 @@
+# /usr/lib/systemd/user/redshift-gtk.service
+[Unit]
+Description=geoclue2 agent daeomn
+After=display-manager.service
+
+[Service]
+ExecStart=/usr/lib/geoclue-2.0/demos/agent
+Restart=always
+
+[Install]
+WantedBy=default.target
