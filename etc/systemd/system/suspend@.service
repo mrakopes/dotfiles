@@ -1,0 +1,12 @@
+[Unit]
+Description=User suspend actions
+Before=sleep.target
+
+[Service]
+User=%I
+Type=forking
+Environment=DISPLAY=:0
+ExecStart=i3lock -t -i /home/cigi/Images/wallpaper/hello-world.png -c 000000
+
+[Install]
+WantedBy=sleep.target
