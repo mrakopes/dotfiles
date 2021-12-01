@@ -1,0 +1,1 @@
+picom --backend glx -b
