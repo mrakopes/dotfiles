@@ -1,4 +1,9 @@
 [core]
 	pager = less -F
+	editor = vim
 [alias]
 	l = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit -n 10
+[merge]
+	ff = false
+[pull]
+	ff = true

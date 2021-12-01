@@ -2,6 +2,7 @@
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
 
+
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
@@ -12,6 +13,9 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
+naughty.config.defaults['icon_size'] = 100
+naughty.config.defaults.margin = 20
+
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 -- Enable hotkeys help widget for VIM and other apps
@@ -174,14 +178,13 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "1", "2" }, s, awful.layout.layouts[3])
+    awful.tag({ "1", "2", "3" }, s, awful.layout.layouts[3])
 
     -- awful.tag({ "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
 
     -- we need to add other tags using awful.tag.add
     -- otherwise (using duplici awful.tag()) multiple 
     -- tags get selected by default (on start or on new screen
-    awful.tag.add("3", {screen = s, layout = awful.layout.layouts[1] } )
     awful.tag.add("4", {screen = s, layout = awful.layout.layouts[1] } )
     awful.tag.add("5", {screen = s, layout = awful.layout.layouts[1] } )
     awful.tag.add("6", {screen = s, layout = awful.layout.layouts[1] } )
@@ -248,7 +251,7 @@ root.buttons(gears.table.join(
 -- lockscreen = function() awful.util.spawn("slock") end
 -- lockscreen = function() awful.util.spawn("xscreensaver-command -lock") end
 lockscreen = function() awful.util.spawn("i3lock -t -i /home/cigi/Images/wallpaper/hello-world.png -c 000000") end
-volumectl = function() awful.util.spawn("pavucontrol-qt") end
+volumectl = function() awful.util.spawn("pavucontrol") end
 
 
 -- {{{ Key bindings
@@ -515,6 +518,7 @@ awful.rules.rules = {
           "Wpa_gui",
           "veromix",
           "xtightvncviewer",
+          "Pavucontrol",
           "Galculator"},
 
         -- Note that the name property shown in xprop might be set slightly after creation of the client
