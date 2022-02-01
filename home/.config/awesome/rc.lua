@@ -15,6 +15,12 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 naughty.config.defaults['icon_size'] = 100
 naughty.config.defaults.margin = 20
+-- naughty.config.defaults.bg = "#aaaaaa"
+
+local notif_shape = function(cr, width, height)
+    gears.shape.rounded_rect(cr, width, height)
+end
+naughty.config.defaults.shape = notif_shape
 
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
@@ -49,10 +55,13 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+beautiful.init(gears.filesystem.get_configuration_dir() .. "theme.lua")
 -- beautiful.wallpaper = awful.util.get_configuration_dir() .. "themes/default/wall.svg"
 -- beautiful.wallpaper = awful.util.get_configuration_dir() .. "themes/default/1056666-arch-linux-wallpaper-1920x1080-for-ios.jpg"
-beautiful.wallpaper = awful.util.get_configuration_dir() .. "themes/wallpaper/wallpaper.png"
+-- beautiful.wallpaper = awful.util.get_configuration_dir() .. "themes/wallpaper/wallpaper.png"
+-- beautiful.wallpaper = awful.util.get_configuration_dir() .. "themes/wallpaper/61f17962edbb5.jpg"
+-- beautiful.wallpaper = awful.util.get_configuration_dir() .. "themes/wallpaper/arch-linux-minimalistic-rainbows-1920x1080-111419.jpg"
+-- beautiful.wallpaper = awful.util.get_configuration_dir() .. "themes/wallpaper/background.png"
 
 
 -- This is used later as the default terminal and editor to run.
@@ -166,7 +175,8 @@ local function set_wallpaper(s)
         if type(wallpaper) == "function" then
             wallpaper = wallpaper(s)
         end
-        gears.wallpaper.maximized(wallpaper, s, true)
+--        gears.wallpaper.maximized(wallpaper, s, true)
+        gears.wallpaper.centered(wallpaper, s)
     end
 end
 
@@ -183,7 +193,7 @@ awful.screen.connect_for_each_screen(function(s)
     -- awful.tag({ "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
 
     -- we need to add other tags using awful.tag.add
-    -- otherwise (using duplici awful.tag()) multiple 
+    -- otherwise (using duplici awful.tag()) multiple
     -- tags get selected by default (on start or on new screen
     awful.tag.add("4", {screen = s, layout = awful.layout.layouts[1] } )
     awful.tag.add("5", {screen = s, layout = awful.layout.layouts[1] } )
@@ -217,7 +227,7 @@ awful.screen.connect_for_each_screen(function(s)
     }
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s })
+    s.mywibox = awful.wibar({ position = "top" , screen = s }) -- , screen = s , bg = "#000000"
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -359,7 +369,7 @@ globalkeys = gears.table.join(
               {description = "show the menubar", group = "launcher"}),
 
     -- Brightness
-    
+
     awful.key({ }, "XF86MonBrightnessDown", function ()
         awful.util.spawn("xbacklight -dec 15") end),
     awful.key({ }, "XF86MonBrightnessUp", function ()
@@ -577,45 +587,45 @@ tag.connect_signal("request::screen", function(t)
 end);
 
 
--- Add a titlebar if titlebars_enabled is set to true in the rules.
-client.connect_signal("request::titlebars", function(c)
-    -- buttons for the titlebar
-    local buttons = gears.table.join(
-        awful.button({ }, 1, function()
-            c:emit_signal("request::activate", "titlebar", {raise = true})
-            awful.mouse.client.move(c)
-        end),
-        awful.button({ }, 3, function()
-            c:emit_signal("request::activate", "titlebar", {raise = true})
-            awful.mouse.client.resize(c)
-        end)
-    )
-
-    awful.titlebar(c) : setup {
-        { -- Left
-            awful.titlebar.widget.iconwidget(c),
-            buttons = buttons,
-            layout  = wibox.layout.fixed.horizontal
-        },
-        { -- Middle
-            { -- Title
-                align  = "center",
-                widget = awful.titlebar.widget.titlewidget(c)
-            },
-            buttons = buttons,
-            layout  = wibox.layout.flex.horizontal
-        },
-        { -- Right
-            awful.titlebar.widget.floatingbutton (c),
-            awful.titlebar.widget.maximizedbutton(c),
-            awful.titlebar.widget.stickybutton   (c),
-            awful.titlebar.widget.ontopbutton    (c),
-            awful.titlebar.widget.closebutton    (c),
-            layout = wibox.layout.fixed.horizontal()
-        },
-        layout = wibox.layout.align.horizontal
-    }
-end)
+-- -- Add a titlebar if titlebars_enabled is set to true in the rules.
+-- client.connect_signal("request::titlebars", function(c)
+--     -- buttons for the titlebar
+--     local buttons = gears.table.join(
+--         awful.button({ }, 1, function()
+--             c:emit_signal("request::activate", "titlebar", {raise = true})
+--             awful.mouse.client.move(c)
+--         end),
+--         awful.button({ }, 3, function()
+--             c:emit_signal("request::activate", "titlebar", {raise = true})
+--             awful.mouse.client.resize(c)
+--         end)
+--     )
+--
+--     awful.titlebar(c) : setup {
+--         { -- Left
+--             awful.titlebar.widget.iconwidget(c),
+--             buttons = buttons,
+--             layout  = wibox.layout.fixed.horizontal
+--         },
+--         { -- Middle
+--             { -- Title
+--                 align  = "center",
+--                 widget = awful.titlebar.widget.titlewidget(c)
+--             },
+--             buttons = buttons,
+--             layout  = wibox.layout.flex.horizontal
+--         },
+--         { -- Right
+--             awful.titlebar.widget.floatingbutton (c),
+--             awful.titlebar.widget.maximizedbutton(c),
+--             awful.titlebar.widget.stickybutton   (c),
+--             awful.titlebar.widget.ontopbutton    (c),
+--             awful.titlebar.widget.closebutton    (c),
+--             layout = wibox.layout.fixed.horizontal()
+--         },
+--         layout = wibox.layout.align.horizontal
+--     }
+-- end)
 
 -- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal("mouse::enter", function(c)
