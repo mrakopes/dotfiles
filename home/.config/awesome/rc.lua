@@ -261,6 +261,10 @@ root.buttons(gears.table.join(
 -- lockscreen = function() awful.util.spawn("slock") end
 -- lockscreen = function() awful.util.spawn("xscreensaver-command -lock") end
 lockscreen = function() awful.util.spawn("i3lock -t -i /home/cigi/Images/wallpaper/hello-world.png -c 000000") end
+picomreload = function()
+	awful.util.spawn("notify-send picom reloaded")
+	awful.util.spawn("pkill -SIGUSR1 picom")
+end
 volumectl = function() awful.util.spawn("pavucontrol") end
 
 
@@ -275,7 +279,10 @@ globalkeys = gears.table.join(
               {description = "view next", group = "tag"}),
     -- awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
     --           {description = "go back", group = "tag"}),
-    awful.key({ "Ctrl", "Shift"           }, "l", lockscreen),
+    awful.key({ "Ctrl", "Shift"       }, "l", lockscreen,
+              {description = "lock screen", group = "i3lock"}),
+    awful.key({ modkey, "Ctrl" }, "l"    , picomreload,
+              {description = "restart compositor", group = "compositor"}),
     awful.key({ modkey           }, "v", volumectl),
 
     awful.key({ modkey,           }, "j",
