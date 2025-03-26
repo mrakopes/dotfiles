@@ -1,4 +1,10 @@
 #!/bin/bash
+#exit 1
+set -x
+pkill -x picom
 
-pkill -SIGUSR1 picom
+sleep 5
 
+
+pkill -SIGUSR1 -x picom
+set +x

@@ -28,6 +28,13 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+local batteryarc_widget = require("awesome-wm-widgets.batteryarcthinkpad-widget.batteryarc")
+-- local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
+-- local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
+-- local volume_widget = require('awesome-wm-widgets.pactl-widget.volume')
+-- local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightness")
+-- local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -243,6 +250,23 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             mykeyboardlayout,
             wibox.widget.systray(),
+	    -- volume_widget(),
+	    -- brightness_widget(),
+	    -- brightness_widget({
+	    --	    program = 'xbacklight',
+	    --	    step = 15,
+	    --	    timeout = 10,
+	    --}),
+	    -- cpu_widget(),
+	    -- ram_widget(),
+	    batteryarc_widget({
+	    	-- show_current_level = true,
+	        arc_thickness = 2,
+	        warning_msg_position = 'top_right',
+	        warning_msg_icon = '/usr/share/icons/Arc/status/symbolic/battery-empty-symbolic.svg',
+                -- warning_msg_icon = '/usr/share/icons/Arc/status/symbolic/battery-low-symbolic.svg',
+	        bg_color = '#000000',
+	    }),
             mytextclock,
             s.mylayoutbox,
         },
@@ -260,7 +284,9 @@ root.buttons(gears.table.join(
 
 -- lockscreen = function() awful.util.spawn("slock") end
 -- lockscreen = function() awful.util.spawn("xscreensaver-command -lock") end
-lockscreen = function() awful.util.spawn("i3lock -t -i /home/cigi/Images/wallpaper/hello-world.png -c 000000") end
+-- lockscreen = function() awful.util.spawn("i3lock -t -i /home/cigi/Images/wallpaper/hello-world.png -c 000000") end
+lockscreen = function() awful.util.spawn("/home/c/bin/screenlock") end
+-- lockscreen = function() awful.util.spawn("i3lock -t -i /home/cigi/.config/awesome/themes/wallpaper/philipp-pilz-AOhBMkQlzgM-unsplash.png -c 000000") end
 picomreload = function()
 	awful.util.spawn("notify-send picom reloaded")
 	awful.util.spawn("pkill -SIGUSR1 picom")
@@ -378,9 +404,9 @@ globalkeys = gears.table.join(
     -- Brightness
 
     awful.key({ }, "XF86MonBrightnessDown", function ()
-        awful.util.spawn("xbacklight -dec 15") end),
+        awful.util.spawn("xbacklight -dec 10 -time 200 -steps 10") end),
     awful.key({ }, "XF86MonBrightnessUp", function ()
-        awful.util.spawn("xbacklight -inc 15") end),
+        awful.util.spawn("xbacklight -inc 10 -time 200 -steps 10") end),
 
     -- display layout
 
@@ -536,7 +562,9 @@ awful.rules.rules = {
           "veromix",
           "xtightvncviewer",
           "Pavucontrol",
-          "Galculator"},
+          "Galculator",
+	  -- "feh",
+	},
 
         -- Note that the name property shown in xprop might be set slightly after creation of the client
         -- and the name shown there might not match defined rules here.
@@ -554,6 +582,10 @@ awful.rules.rules = {
     { rule_any = {type = { "normal", "dialog" }
       }, properties = { titlebars_enabled = true }
     },
+
+--     { rule = { class = { "feh"}
+--       }, properties = { floating = true }
+--     }
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Chromium" },
