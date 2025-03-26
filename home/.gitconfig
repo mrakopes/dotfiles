@@ -1,9 +1,35 @@
 [core]
 	pager = less -F
 	editor = vim
+
 [alias]
-	l = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit -n 10
+	l = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset (%G?)' --abbrev-commit -n 10
+
+[user]
+	email = <private mail>
+	name = mrakopes
+	signingkey = <personal gpg key ID>
+
 [merge]
 	ff = false
+
 [pull]
 	ff = true
+
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+
+[commit]
+	gpgsign = true
+
+[tag]
+	gpgsign = true
+
+[init]
+	defaultBranch = main
+
+[includeIf "gitdir:~/git/wedos/"]
+	path = ~/.gitconfig-wedos

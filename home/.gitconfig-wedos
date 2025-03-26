@@ -1,0 +1,8 @@
+[user]
+	email = <work mail>
+	name = <work name>
+	signingkey = <work gpg key ID>
+# [commit]
+# 	gpgsign = true
+# [tag]
+# 	gpgsign = true
